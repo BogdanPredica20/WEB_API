@@ -9,12 +9,12 @@ namespace BogdanPredica_API.DataContext
 
         public DbSet<Announcement> Announcements { get; set; }
 
-        //public DbSet<MemberModel> Members { get; set; }
+        public DbSet<Member> Members { get; set; }
 
         //public DbSet<MembershipModel> Memberships { get; set; }
 
         //public DbSet<MembershipTypeModel> MembershipTypes { get; set; }
 
-        //public DbSet<CodeSnippetModel> CodeSnippets { get; set; }
+        public DbSet<CodeSnippet> CodeSnippets { get; set; }
     }
 }
