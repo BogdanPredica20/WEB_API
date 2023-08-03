@@ -8,5 +8,7 @@ namespace BogdanPredica_API.Repositories.Interfaces
         Task<CodeSnippet> GetCodeSnippetByIdAsync(Guid id);
         Task CreateCodeSnippetAsync(CodeSnippet codeSnippet);
         Task<CodeSnippet> UpdateCodeSnippetAsync(Guid id, CodeSnippet codeSnippet);
+        Task<CodeSnippet> UpdatePartiallyCodeSnippetAsync(Guid id, CodeSnippet codeSnippet);
+        Task<bool> DeleteCodeSnipetAsync(Guid id);
     }
 }

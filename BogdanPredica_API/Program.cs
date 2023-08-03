@@ -48,6 +48,9 @@ namespace BogdanPredica_API
             builder.Services.AddTransient<IAnnouncementsRepository, AnnouncementsRepository>();
             builder.Services.AddTransient<ICodeSnippetsRepository, CodeSnippetsRepository>();
             builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IMembersRepository, MembersRepository>();
+            builder.Services.AddTransient<IMembershipTypesRepository, MembershipTypesRepository>();
+            builder.Services.AddTransient<IMembershipsRepository, MembershipsRepository>();
 
             builder.Logging.AddLog4Net("log4net.config");
 

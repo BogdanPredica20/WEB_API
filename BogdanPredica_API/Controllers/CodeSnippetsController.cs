@@ -1,6 +1,9 @@
-﻿using BogdanPredica_API.Helpers.Enums;
-using BogdanPredica_API.Repositories;
+﻿using BogdanPredica_API.Exceptions;
+using BogdanPredica_API.Helpers.Enums;
+using BogdanPredica_API.Models;
 using BogdanPredica_API.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -62,18 +65,99 @@ namespace BogdanPredica_API.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CodeSnippet codeSnippet)
         {
+            try
+            {
+                if (codeSnippet == null)
+                {
+                    return StatusCode((int)HttpStatusCode.BadRequest, ErrorMessagesEnum.Announcement.BadRequest);
+                }
+                await _codeSnippetsRepository.CreateCodeSnippetAsync(codeSnippet);
+                return Ok(SuccessMessagesEnum.CodeSnippet.CodeSnippetAdded);
+            }
+            catch (ModelValidationException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Create code snippet error occured {ex.Message}");
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] CodeSnippet codeSnippet)
         {
+            try
+            {
+                if (codeSnippet == null)
+                {
+                    return StatusCode((int)HttpStatusCode.BadRequest, ErrorMessagesEnum.Announcement.BadRequest);
+                }
+                codeSnippet.IdCodeSnippet = id;
+                var updatedCodeSnippet = await _codeSnippetsRepository.UpdateCodeSnippetAsync(id, codeSnippet);
+                if (updatedCodeSnippet == null)
+                {
+                    return StatusCode((int)HttpStatusCode.NotFound, ErrorMessagesEnum.CodeSnippet.NotFoundById);
+                }
+                return StatusCode((int)HttpStatusCode.OK, SuccessMessagesEnum.CodeSnippet.CodeSnippetUpdated);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Update code snippet error occured {ex.Message}");
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Patch([FromRoute] Guid id, [FromBody] CodeSnippet codeSnippet)
         {
+            try
+            {
+                if (codeSnippet == null)
+                {
+                    return StatusCode((int)HttpStatusCode.BadRequest, ErrorMessagesEnum.Announcement.BadRequest);
+                }
+                var updatedCodeSnippet = await _codeSnippetsRepository.UpdatePartiallyCodeSnippetAsync(id, codeSnippet);
+                if (updatedCodeSnippet == null)
+                {
+                    return StatusCode((int)HttpStatusCode.NotFound, ErrorMessagesEnum.CodeSnippet.NotFoundById);
+                }
+                return StatusCode((int)HttpStatusCode.OK, SuccessMessagesEnum.CodeSnippet.CodeSnippetUpdated);
+            }
+            catch (ModelValidationException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Update code snippet error occured {ex.Message}");
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            try
+            {
+                var result = await _codeSnippetsRepository.DeleteCodeSnipetAsync(id);
+                if (result)
+                {
+                    _logger.LogInformation($"A fost sters code snippet cu id-ul: {id}");
+                    return Ok(SuccessMessagesEnum.CodeSnippet.CodeSnippetDeleted);
+                }
+                _logger.LogInformation($"Code snippet cu id-ul {id} nu a fost gasit pentru a fi sters");
+                return StatusCode((int)HttpStatusCode.BadRequest, ErrorMessagesEnum.CodeSnippet.NotFoundById);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Delete code snippet error occured {ex.Message}");
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
     }
 }

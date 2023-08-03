@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BogdanPredica_API", "BogdanPredica_API\BogdanPredica_API.csproj", "{F51AC07C-EE37-4F71-AF7F-E2047D43A943}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BogdanPredica_API", "BogdanPredica_API\BogdanPredica_API.csproj", "{F51AC07C-EE37-4F71-AF7F-E2047D43A943}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BogdanPredica_API.Tests", "BogdanPredica_API.Tests\BogdanPredica_API.Tests.csproj", "{A1F02C76-7DB4-4B2D-9DDB-9393C8E131D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F51AC07C-EE37-4F71-AF7F-E2047D43A943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F51AC07C-EE37-4F71-AF7F-E2047D43A943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F51AC07C-EE37-4F71-AF7F-E2047D43A943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1F02C76-7DB4-4B2D-9DDB-9393C8E131D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1F02C76-7DB4-4B2D-9DDB-9393C8E131D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1F02C76-7DB4-4B2D-9DDB-9393C8E131D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1F02C76-7DB4-4B2D-9DDB-9393C8E131D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

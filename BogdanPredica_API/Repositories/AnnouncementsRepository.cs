@@ -51,6 +51,7 @@ namespace BogdanPredica_API.Repositories
 
             if (announcement != null)
             {
+                ValidationFunctions.ThrowExceptionWhenDateIsNotValid(announcement.ValidFrom, announcement.ValidTo);
                 _context.Announcements.Update(announcement);
                 await _context.SaveChangesAsync();
             }
