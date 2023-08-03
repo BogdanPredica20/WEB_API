@@ -25,14 +25,5 @@ namespace BogdanPredica_API.Tests.DbContextHelpers
             dbContext.Entry(model).State = EntityState.Detached;
             return model;
         }
-
-        /*
-        public static Member AddMember(ClubLibraDbContext dbContext, MemberModel model)
-        {
-            dbContext.Add(model);
-            dbContext.SaveChanges();
-            dbContext.Entry(model).State = EntityState.Detached;
-            return model;
-        }*/
     }
 }
